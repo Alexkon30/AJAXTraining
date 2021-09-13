@@ -1,0 +1,68 @@
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+form, .form {
+  
+  display: flex;
+  flex-direction: column;
+align-items: center;
+}
+
+.form {
+  margin-top: 100px;
+  background-color: aquamarine;
+  border: 5px solid blue;
+  width: 400px;
+  align-self: center;
+  border-radius: 15px;
+}
+
+header {
+  background-color:darkslateblue;
+  display: flex;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+#headLink {
+  color:aliceblue;
+}
+
+.sign {
+margin-top: 5px;
+}
+
+#logout {
+  margin-left: auto;
+  color:aliceblue;
+}
+
+.main-container {
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: 200px 1fr;
+  align-items: stretch;
+}
+
+.backcolor {
+  background-color: crimson;
+  border: 1px solid blue;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+}
+aside a {
+ margin: 3px;
+}
+
+aside a:hover {
+  background-color:cyan;
+}
+
+.hide {
+  display: none;
+}
