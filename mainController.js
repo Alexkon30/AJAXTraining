@@ -4,7 +4,9 @@ import User from './User.js';
 class mainController {
   async create(req, res) {
     let date = new Date();
-    let month = `${date.getMonth() + 1}`.length == 1 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
+    let month = `${date.getMonth() + 1}`.length == 1 ?
+      `0${date.getMonth() + 1}` :
+      `${date.getMonth() + 1}`;
     User.create({
       login: req.body.login,
       password: req.body.password,
@@ -38,7 +40,6 @@ class mainController {
   // }
 
   async check(req, res) {
-    if (!req.body) return res.sendStatus(400);
     try {
       const user = await User.find(req.body);
       if (user.length === 1) {
@@ -59,7 +60,7 @@ class mainController {
   out(req, res) {
     req.session.auth = false;
     req.session.userId = null;
-    res.end();
+    res.redirect('/')
   }
 }
 

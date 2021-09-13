@@ -1,11 +1,11 @@
-let change = document.querySelector('#change')
-let h2 = document.querySelector('h2')
-let button = document.querySelector('button')
-let message = document.querySelector('#message')
-let form = document.querySelector('form')
-let loginInput = document.querySelector('input[name="login"]')
-let passwordInput = document.querySelector('input[name="password"]')
-let logout = document.querySelector('#logout')
+const change = document.querySelector('#change')
+const h2 = document.querySelector('h2')
+const button = document.querySelector('button')
+const message = document.querySelector('#message')
+const form = document.querySelector('form')
+const loginInput = document.querySelector('input[name="login"]')
+const passwordInput = document.querySelector('input[name="password"]')
+const logout = document.querySelector('#logout')
 logout.remove();
 
 change.addEventListener('click', changeMode);

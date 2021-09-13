@@ -17,7 +17,7 @@ class userController {
         res.status(500).send(e.message)
       }
     } else {
-      res.status(500).send('not authorized')
+      res.redirect('/')
     }
   }
 }
