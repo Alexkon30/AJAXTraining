@@ -3,11 +3,12 @@ import User from './User.js';
 
 class mainController {
   async create(req, res) {
-    //console.log('create')
+    let date = new Date();
+    let month = `${date.getMonth() + 1}`.length == 1 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
     User.create({
       login: req.body.login,
       password: req.body.password,
-      dateOfRegistration: Date.now(),
+      dateOfRegistration: `${date.getDate()}.${month}.${date.getFullYear()}`,
     }, (err, result) => {
       if (err) {
         console.log(err)
@@ -16,14 +17,13 @@ class mainController {
       } else {
         req.session.auth = true;
         req.session.userId = result._id.toString();
-        res.send();
+        res.end();
         //res.redirect('/user');
       }
     })
   }
 
   async welcome(req, res) {
-    //console.log('welcome')
     if (req.session.auth) {
       res.redirect('/user')
     } else {
@@ -38,14 +38,13 @@ class mainController {
   // }
 
   async check(req, res) {
-    //console.log('check')
     if (!req.body) return res.sendStatus(400);
     try {
       const user = await User.find(req.body);
       if (user.length === 1) {
         req.session.auth = true;
         req.session.userId = user[0]._id.toString();
-        res.send();
+        res.end();
         //res.redirect('/user')
       } else {
         //req.flash('warning', 'Incorrect login or pass');
@@ -58,10 +57,9 @@ class mainController {
   }
 
   out(req, res) {
-    //console.log('out')
     req.session.auth = false;
     req.session.userId = null;
-    res.send();
+    res.end();
   }
 }
 

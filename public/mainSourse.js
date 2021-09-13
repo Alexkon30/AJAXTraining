@@ -30,8 +30,7 @@ function changeMode(event) {
 
 function checkResponse(res, note) {
   if (res.ok === true) {
-    //message.classList.add('hide');
-    document.location.href = document.location.href + 'user';
+    document.location.href = 'http://localhost:3000/user';
   } else {
     message.innerText = note;
     message.classList.remove('hide');
