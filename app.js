@@ -10,7 +10,7 @@ import userRouter from './userRouter.js'
 
 import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
-import flash from 'connect-flash';
+//import flash from 'connect-flash';
 
 
 const app = express();
@@ -36,7 +36,7 @@ app.use(expressSession({
 }))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
-app.use(flash())
+//app.use(flash())
 
 app.use('/', mainRouter);
 app.use('/user', userRouter);

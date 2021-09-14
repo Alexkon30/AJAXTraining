@@ -1,17 +1,15 @@
 import User from './User.js'
 
 class userController {
-  async main(req, res) {
+  main(req, res) {
     if (req.session.auth) {
-      User.findById(req.session.userId, (err, result) => {
-        if (err) {
-          res.status(500).send(err.message)
-        } else {
+      User.findById(req.session.userId)
+        .then(result => {
           res.render('user.hbs', {
             user: result.toJSON(),
           })
-        }
-      });
+        })
+        .catch(err => res.status(500).send(err.message));
     } else {
       res.redirect('/')
     }
@@ -28,23 +26,41 @@ class userController {
                 clientName: elem.login,
                 clientId: elem._id.toString(),
               }
-            })
-          console.log(users)
+            });
           res.send(users)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(err => res.status(500).send(err.message));
+    } else {
+      res.redirect('/')
+    }
+  }
+
+  getSettings(req, res) {
+    if (req.session.auth) {
+      User.findById(req.session.userId)
+        .then(result => {
+          let client = Object.assign({}, result.toJSON())
+          delete client.password;
+          delete client._id;
+          //console.log(client)
+          res.send(client)
         })
+        .catch(err => res.status(500).send(err.message));
+    }
+  }
 
+  setSettings(req, res) {
+    if (req.session.auth) {
+      //console.log(req.body)
+      User.findByIdAndUpdate(req.session.userId, req.body)
+        .then(() => res.send())
+        .catch(e => console.log(e.message))
+    }
+  }
 
-      // (err, result) => {
-      // if (err) {
-      //   res.status(500).send(err.message)
-      // } else {
-      //   console.log(result)
-      //   res.send(result)
-      // }
-      //})
+  getMessages(req, res) {
+    if (req.session.auth) {
+
     }
   }
 }
