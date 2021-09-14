@@ -28,8 +28,8 @@ function changeMode(event) {
   }
 }
 
-function checkResponse(res, note) {
-  if (res.ok === true) {
+function checkResponse(result, note) {
+  if (result.ok) {
     document.location.href = 'http://localhost:3000/user';
   } else {
     message.innerText = note;
