@@ -5,8 +5,9 @@ const userRouter = new Router();
 
 userRouter.get('/', userController.main);
 userRouter.get('/people', userController.people);
-userRouter.get('/getSettings', userController.getSettings)
-userRouter.get('/getMessages', userController.getMessages)
+userRouter.get('/getSettings', userController.getSettings);
+userRouter.get('/getMessages', userController.getMessages);
 userRouter.post('/setSettings', userController.setSettings);
+userRouter.get('/deleteUser', userController.deleteUser);
 
 export default userRouter;

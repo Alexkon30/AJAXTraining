@@ -42,7 +42,11 @@ class userController {
           let client = Object.assign({}, result.toJSON())
           delete client.password;
           delete client._id;
-          //console.log(client)
+          delete client.login;
+          delete client.dateOfRegistration;
+          delete client.age;
+
+          console.log(client)
           res.send(client)
         })
         .catch(err => res.status(500).send(err.message));
@@ -60,7 +64,19 @@ class userController {
 
   getMessages(req, res) {
     if (req.session.auth) {
+      //TODO
+    }
+  }
 
+  deleteUser(req, res) {
+    if (req.session.auth) {
+      User.findByIdAndDelete(req.session.userId)
+        .then(() => {
+          req.session.auth = false;
+          req.session.userId = null;
+          res.send()
+        })
+        .catch(e => console.log(e.message))
     }
   }
 }
