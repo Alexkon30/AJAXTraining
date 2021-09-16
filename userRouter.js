@@ -9,5 +9,7 @@ userRouter.get('/getSettings', userController.getSettings);
 userRouter.get('/getMessages', userController.getMessages);
 userRouter.post('/setSettings', userController.setSettings);
 userRouter.get('/deleteUser', userController.deleteUser);
+userRouter.get('/people/:id', userController.getUserPage);
+
 
 export default userRouter;

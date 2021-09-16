@@ -79,6 +79,19 @@ class userController {
         .catch(e => console.log(e.message))
     }
   }
+
+  getUserPage(req, res) {
+    User.findById(req.params.id)
+      .then(result => {
+        let client = Object.assign({}, result.toJSON())
+        delete client.password;
+        delete client._id;
+        delete client.login;
+        client.id = result._id.toString();
+        res.send(client);
+      })
+      .catch(e => console.log(e.message))
+  }
 }
 
 export default new userController();

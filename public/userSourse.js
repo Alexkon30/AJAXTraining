@@ -13,11 +13,34 @@ peopleLink.addEventListener('click', async (e) => {
   let peopleList = await result.json();
   let listOfDialogs = peopleList
     .map(user => {
-      return `<div><a href="#" dataset="${user.clientName}" class="people-users">${user.clientName}</a></div>`
+      return `<div><a href="#" data-client_id="${user.clientId}" class="people-users">${user.clientName}</a></div>`
     })
     .join('');
   mainElem.innerHTML = listOfDialogs;
+
+  let peopleLinks = document.querySelectorAll('.people-users');
+  for (let link of peopleLinks) {
+    link.addEventListener('click', async (e) => {
+      e.preventDefault();
+      let result = await fetch('/user/people/' + link.dataset.client_id, {
+        //method: "GET",
+        //headers: { "Accept": "application/json" },
+      })
+
+      let man = await result.json();
+      let manStats = [];
+      for (let item in man) {
+        manStats.push(`<div><p>${item}:${man[item]}</p></div>`)
+      }
+      manStats.push(`<div><button id="toFriends">Add to friends</button></div>`)
+      mainElem.innerHTML = manStats.join('');
+    })
+  }
 })
+
+
+
+
 
 messengerLink.addEventListener('click', async (e) => {
   e.preventDefault();
@@ -42,7 +65,7 @@ settingsLink.addEventListener('click', async (e) => {
       resArr.push('<div><button id="save">Save</button></div>');
       resArr.push('<div><button id="delete">Delete account</button></div>')
       mainElem.innerHTML = resArr.join('')
-      let birth = document.querySelector('input[data-statelem="birthday"]').type = 'date';
+      document.querySelector('input[data-statelem="birthday"]').type = 'date';
 
       let save = document.querySelector('#save');
       save.addEventListener('click', async () => {
