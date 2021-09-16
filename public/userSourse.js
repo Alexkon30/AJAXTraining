@@ -34,13 +34,21 @@ peopleLink.addEventListener('click', async (e) => {
       }
       manStats.push(`<div><button id="toFriends">Add to friends</button></div>`)
       mainElem.innerHTML = manStats.join('');
+
+      document.querySelector('#toFriends').addEventListener('click', async (e) => {
+        e.preventDefault();
+        let result = await fetch('/user/people/add/' + man.id, {
+          //method: "GET",
+          //headers: { "Accept": "application/json" },
+        })
+
+        if (result.ok) {
+          console.log(await result.body);
+        }
+      })
     })
   }
 })
-
-
-
-
 
 messengerLink.addEventListener('click', async (e) => {
   e.preventDefault();
@@ -107,3 +115,12 @@ settingsLink.addEventListener('click', async (e) => {
 })
 
 //проверить будет ли ссылка из хедера работать с других рендеров
+
+
+//добавить возможность на страницу других пользователей менять значение кнопки в зависимости от 
+//того в друзьях или нет - удалить из друзей или добавить
+//проверка на friends.includes
+
+//менять значение кнопки в зависимости от ответа сервера И при нажатии
+
+//нужна ли переадресация после добавления в друзья?

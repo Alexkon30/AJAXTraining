@@ -10,6 +10,7 @@ userRouter.get('/getMessages', userController.getMessages);
 userRouter.post('/setSettings', userController.setSettings);
 userRouter.get('/deleteUser', userController.deleteUser);
 userRouter.get('/people/:id', userController.getUserPage);
+userRouter.get('/people/add/:id', userController.addToFriends);
 
 
 export default userRouter;

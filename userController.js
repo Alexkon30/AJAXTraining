@@ -39,12 +39,13 @@ class userController {
     if (req.session.auth) {
       User.findById(req.session.userId)
         .then(result => {
-          let client = Object.assign({}, result.toJSON())
-          delete client.password;
-          delete client._id;
-          delete client.login;
-          delete client.dateOfRegistration;
-          delete client.age;
+          //let client = Object.assign({}, result.toJSON())
+          let client = {
+            name: result.name,
+            surname: result.surname,
+            birthday: result.birthday,
+          }
+
 
           console.log(client)
           res.send(client)
@@ -89,6 +90,24 @@ class userController {
         delete client.login;
         client.id = result._id.toString();
         res.send(client);
+      })
+      .catch(e => console.log(e.message))
+  }
+
+  addToFriends(req, res) {
+    User.findById(req.session.userId)
+      .then(result => {
+        if (!result.friends.includes(req.params.id)) {
+          result.friends.push(req.params.id);
+          result.save();
+
+          User.findById(req.params.id)
+            .then(newFriend => {
+              newFriend.friends.push(req.session.userId);
+              newFriend.save();
+            })
+        }
+        res.send(result.friends)
       })
       .catch(e => console.log(e.message))
   }
