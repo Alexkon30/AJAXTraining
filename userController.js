@@ -9,7 +9,7 @@ class userController {
             user: result.toJSON(),
           })
         })
-        .catch(err => res.status(500).send(err.message));
+        .catch(err => console.log(err.message));
     } else {
       res.redirect('/')
     }
@@ -29,7 +29,7 @@ class userController {
             });
           res.send(users)
         })
-        .catch(err => res.status(500).send(err.message));
+        .catch(err => console.log(err.message));
     } else {
       res.redirect('/')
     }
@@ -45,21 +45,17 @@ class userController {
             surname: result.surname,
             birthday: result.birthday,
           }
-
-
-          console.log(client)
           res.send(client)
         })
-        .catch(err => res.status(500).send(err.message));
+        .catch(err => console.log(err.message));
     }
   }
 
   setSettings(req, res) {
     if (req.session.auth) {
-      //console.log(req.body)
       User.findByIdAndUpdate(req.session.userId, req.body)
         .then(() => res.send())
-        .catch(e => console.log(e.message))
+        .catch(err => console.log(err.message));
     }
   }
 
@@ -77,21 +73,35 @@ class userController {
           req.session.userId = null;
           res.send()
         })
-        .catch(e => console.log(e.message))
+        .catch(err => console.log(err.message));
     }
   }
 
-  getUserPage(req, res) {
+  async getUserPage(req, res) {
+    let friendsNames = [];
+    let client = {};
+
     User.findById(req.params.id)
-      .then(result => {
-        let client = Object.assign({}, result.toJSON())
-        delete client.password;
-        delete client._id;
-        delete client.login;
-        client.id = result._id.toString();
-        res.send(client);
+      .then(async result => {
+        client = {
+          'Date of registration': result.dateOfRegistration,
+          Birthday: result.birthday,
+          Name: result.name,
+          Surname: result.surname,
+          Age: result.age,
+          isFriend: result.friends.includes(req.session.userId),
+          id: result._id.toString(),
+        }
+
+        for (let friendId of result.friends) {
+          let user = await User.findById(friendId)
+          friendsNames.push(user.name)
+        }
+
+        client['Friends'] = friendsNames.join(',');
+        res.send(client)
       })
-      .catch(e => console.log(e.message))
+      .catch(err => console.log(err.message));
   }
 
   addToFriends(req, res) {
@@ -109,8 +119,27 @@ class userController {
         }
         res.send(result.friends)
       })
-      .catch(e => console.log(e.message))
+      .catch(err => console.log(err.message));
+  }
+
+  removeFromFriends(req, res) {
+    User.findById(req.session.userId)
+      .then(result => {
+        if (result.friends.includes(req.params.id)) {
+          result.friends = result.friends.filter(id => id != req.params.id);
+          result.save();
+
+          User.findById(req.params.id)
+            .then(newFriend => {
+              newFriend.friends = newFriend.friends.filter(id => id != req.session.userId);
+              newFriend.save();
+            })
+        }
+        res.send(result.friends)
+      })
+      .catch(err => console.log(err.message));
   }
 }
 
 export default new userController();
+

@@ -30,22 +30,42 @@ peopleLink.addEventListener('click', async (e) => {
       let man = await result.json();
       let manStats = [];
       for (let item in man) {
-        manStats.push(`<div><p>${item}:${man[item]}</p></div>`)
+        if (item != 'isFriend' && item != 'id') {
+          manStats.push(`<div><p>${item}:${man[item]}</p></div>`);
+        }
       }
-      manStats.push(`<div><button id="toFriends">Add to friends</button></div>`)
+      if (!man.isFriend) {
+        manStats.push(`<div><button id="toFriends">Add to friends</button></div>`);
+      } else {
+        manStats.push(`<div><button id="toFriends">Remove from friends</button></div>`);
+      }
       mainElem.innerHTML = manStats.join('');
 
-      document.querySelector('#toFriends').addEventListener('click', async (e) => {
-        e.preventDefault();
-        let result = await fetch('/user/people/add/' + man.id, {
-          //method: "GET",
-          //headers: { "Accept": "application/json" },
-        })
+      let addFriendsButton = document.querySelector('#toFriends');
+      if (!man.isFriend) {
+        addFriendsButton.addEventListener('click', addToFriends);
+      } else {
+        addFriendsButton.addEventListener('click', removeFromFriends);
+      }
 
+
+      async function addToFriends() {
+        let result = await fetch('/user/people/add/' + man.id)
         if (result.ok) {
-          console.log(await result.body);
+          addFriendsButton.innerText = 'Delete from friends';
+          addFriendsButton.removeEventListener('click', addToFriends);
+          addFriendsButton.addEventListener('click', removeFromFriends);
         }
-      })
+      }
+
+      async function removeFromFriends() {
+        let result = await fetch('/user/people/delete/' + man.id)
+        if (result.ok) {
+          addFriendsButton.innerText = 'Add to friends';
+          addFriendsButton.addEventListener('click', addToFriends);
+          addFriendsButton.removeEventListener('click', removeFromFriends);
+        }
+      }
     })
   }
 })
@@ -116,11 +136,4 @@ settingsLink.addEventListener('click', async (e) => {
 
 //проверить будет ли ссылка из хедера работать с других рендеров
 
-
-//добавить возможность на страницу других пользователей менять значение кнопки в зависимости от 
-//того в друзьях или нет - удалить из друзей или добавить
-//проверка на friends.includes
-
 //менять значение кнопки в зависимости от ответа сервера И при нажатии
-
-//нужна ли переадресация после добавления в друзья?

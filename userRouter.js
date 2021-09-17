@@ -11,6 +11,7 @@ userRouter.post('/setSettings', userController.setSettings);
 userRouter.get('/deleteUser', userController.deleteUser);
 userRouter.get('/people/:id', userController.getUserPage);
 userRouter.get('/people/add/:id', userController.addToFriends);
+userRouter.get('/people/delete/:id', userController.removeFromFriends);
 
 
 export default userRouter;
