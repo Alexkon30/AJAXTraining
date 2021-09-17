@@ -6,7 +6,8 @@ import hbs from 'hbs';
 import mongoose from 'mongoose';
 
 import mainRouter from './mainRouter.js';
-import userRouter from './userRouter.js'
+import userRouter from './userRouter.js';
+import messengerRouter from './messengerRouter.js';
 
 import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -40,7 +41,7 @@ app.use(express.static(__dirname + "/public"));
 
 app.use('/', mainRouter);
 app.use('/user', userRouter);
-//app.use('/users', usersRouter);
+app.use('/messenger', messengerRouter);
 
 
 mongoose.connect(URL, {

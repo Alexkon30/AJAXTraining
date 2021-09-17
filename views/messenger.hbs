@@ -1,0 +1,15 @@
+<div class="main-container">
+    {{> aside}}
+    <main>
+    {{#each chats}}
+  <div data-friendId={{this.id}} class="backcolor chat">
+    {{this.name}}
+  </div>
+{{/each}}
+    </main>
+    
+</div>
+<script src="messengerSourse.js"></script>
+
+
+

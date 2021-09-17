@@ -70,12 +70,6 @@ peopleLink.addEventListener('click', async (e) => {
   }
 })
 
-messengerLink.addEventListener('click', async (e) => {
-  e.preventDefault();
-  await fetch('/user/getMessages')
-  //TODO
-})
-
 settingsLink.addEventListener('click', async (e) => {
   e.preventDefault();
   await fetch('/user/getSettings')

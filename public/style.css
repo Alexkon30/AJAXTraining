@@ -66,3 +66,12 @@ aside a:hover {
 .hide {
   display: none;
 }
+
+.chat {
+  height: 75px;
+}
+
+.chat:hover {
+  cursor: pointer;
+  background-color:cadetblue;
+}

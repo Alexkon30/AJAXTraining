@@ -1,4 +1,5 @@
-import User from './User.js'
+import User from './User.js';
+import Dialog from './Dialog.js';
 
 class userController {
   main(req, res) {
@@ -59,12 +60,6 @@ class userController {
     }
   }
 
-  getMessages(req, res) {
-    if (req.session.auth) {
-      //TODO
-    }
-  }
-
   deleteUser(req, res) {
     if (req.session.auth) {
       User.findByIdAndDelete(req.session.userId)
@@ -77,7 +72,7 @@ class userController {
     }
   }
 
-  async getUserPage(req, res) {
+  getUserPage(req, res) {
     let friendsNames = [];
     let client = {};
 
@@ -117,7 +112,13 @@ class userController {
               newFriend.save();
             })
         }
-        res.send(result.friends)
+      })
+      .then(async () => {
+        let dialog = await Dialog.find({ users: [req.params.id, req.session.userId] })
+        if (dialog.length == 0) {
+          let newDialog = await Dialog.create({ users: [req.params.id, req.session.userId] })
+        }
+        res.send()
       })
       .catch(err => console.log(err.message));
   }
