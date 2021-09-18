@@ -5,9 +5,23 @@ class userController {
   main(req, res) {
     if (req.session.auth) {
       User.findById(req.session.userId)
-        .then(result => {
+        .then(async result => {
+          let user = {
+            name: result.name,
+            surname: result.surname,
+            age: result.age,
+            birthday: result.birthday
+          }
+
+          let friends = [];
+          for (let friendId of result.friends) {
+            let friend = await User.findById(friendId);
+            friends.push(friend.name);
+          }
+          user.friends = friends.join(', ')
+
           res.render('user.hbs', {
-            user: result.toJSON(),
+            user
           })
         })
         .catch(err => console.log(err.message));
@@ -37,6 +51,7 @@ class userController {
   }
 
   getSettings(req, res) {
+    console.log(req.url);
     if (req.session.auth) {
       User.findById(req.session.userId)
         .then(result => {
@@ -53,6 +68,8 @@ class userController {
   }
 
   setSettings(req, res) {
+    console.log(req.url);
+
     if (req.session.auth) {
       User.findByIdAndUpdate(req.session.userId, req.body)
         .then(() => res.send())

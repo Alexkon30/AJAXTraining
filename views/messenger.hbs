@@ -1,8 +1,8 @@
 <div class="main-container">
     {{> aside}}
-    <main>
+    <main class="backcolor">
     {{#each chats}}
-  <div data-friendId={{this.id}} class="backcolor chat">
+  <div data-friendId={{this.id}} class="chat">
     {{this.name}}
   </div>
 {{/each}}
@@ -10,6 +10,8 @@
     
 </div>
 <script src="messengerSourse.js"></script>
+<script src="asideSourse.js"></script>
+
 
 
 

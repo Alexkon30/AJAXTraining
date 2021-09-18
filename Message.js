@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
 const Message = new mongoose.Schema({
+  author: String,
   authorId: String,
   dialogId: String,
-  date: { type: Date, default: Date.now() },
+  date: String,
   text: { type: String, default: '' }
 }, { versionKey: false })
 

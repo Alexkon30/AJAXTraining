@@ -45,6 +45,7 @@ class mainController {
       if (user.length === 1) {
         req.session.auth = true;
         req.session.userId = user[0]._id.toString();
+        req.session.userName = user[0].name == '' ? 'noName' : user[0].name;
         res.end();
         //res.redirect('/user')
       } else {

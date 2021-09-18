@@ -5,8 +5,8 @@ const User = new mongoose.Schema({
   password: { type: String, required: true },
   dateOfRegistration: { type: String },
   birthday: { type: String, default: '' },
-  name: { type: String, default: '' },
-  surname: { type: String, default: '' },
+  name: { type: String, default: 'noName' },
+  surname: { type: String, default: 'noSurname' },
   age: { type: Number, default: 20 },
   friends: [String],
 }, { versionKey: false })

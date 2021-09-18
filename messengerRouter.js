@@ -5,6 +5,7 @@ const messengerRouter = new Router();
 
 messengerRouter.get('/', messengerController.main);
 messengerRouter.get('/:id', messengerController.getChat);
+messengerRouter.post('/', messengerController.sendMessage)
 
 
 

@@ -41,13 +41,13 @@ margin-top: 5px;
 
 .main-container {
   display: grid;
-  flex-direction: row;
+  /* flex-direction: row-reverse; */
   grid-template-columns: 200px 1fr;
   align-items: stretch;
 }
 
 .backcolor {
-  background-color: crimson;
+  background-color:lightslategray;
   border: 1px solid blue;
 }
 
@@ -74,4 +74,10 @@ aside a:hover {
 .chat:hover {
   cursor: pointer;
   background-color:cadetblue;
+}
+
+.message {
+  border: 1px solid red;
+  padding: 10px 0 10px 10px;
+  margin: 5px 0;
 }
