@@ -13,12 +13,13 @@ import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
 //import flash from 'connect-flash';
 
+import config from './config.js';
+
 
 const app = express();
 const URL = "mongodb://localhost:27017/forumDB";
 const __dirname = path.resolve();
 const PORT = 3000;
-let secret = 'string for secret';
 
 app.set('view engine', 'hbs');
 app.engine('hbs', exphbs({
@@ -28,10 +29,10 @@ app.engine('hbs', exphbs({
 }))
 hbs.registerPartials(__dirname + "/views/partials");
 
-app.use(cookieParser(secret));
+app.use(cookieParser(config.cookieSecret));
 app.use(express.json());
 app.use(expressSession({
-  secret: secret,
+  secret: config.cookieSecret,
   resave: true,
   saveUninitialized: true,
 }))

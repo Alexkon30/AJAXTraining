@@ -1,5 +1,16 @@
 import User from './User.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import config from './config.js';
+
+
+const generateAccessToken = (id) => {
+  const payload = {
+    id,
+  }
+
+  return jwt.sign(payload, config.secret, { expiresIn: '1h' });
+}
 
 
 class mainController {
@@ -46,16 +57,19 @@ class mainController {
 
   async check(req, res) {
     try {
-      const password = req.body.password
+      const password = req.body.password;
       const user = await User.findOne({
         login: req.body.login,
       });
-      console.log(user);
       if (bcrypt.compareSync(req.body.password, user.password)) {
         req.session.auth = true;
         req.session.userId = user.id;
-        console.log(user.id)
         req.session.userName = user.name;
+
+        const token = generateAccessToken(user.id);
+        res.cookie('token', token, {
+          httpOnly: true,
+        });
         res.end();
         //res.redirect('/user')
       } else {

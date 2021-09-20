@@ -30,6 +30,7 @@ function changeMode(event) {
 
 function checkResponse(result, note) {
   if (result.ok) {
+    // console.log(result);
     document.location.href = 'http://localhost:3000/user';
   } else {
     message.innerText = note;
@@ -45,9 +46,13 @@ async function fetchWithPostMethod(url, data) {
     headers: {
       //  'Accept': 'application/json',
       'Content-Type': 'application/json',
+      //'Authorization': 'Bearer ${response.token}'
     },
     body: JSON.stringify(data),
   })
+  console.log(result);
+  //let response = await result.json();
+  //console.log(response);
   return result;
 }
 
