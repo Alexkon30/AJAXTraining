@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+* {
+  text-decoration: none;
+}
+
 form, .form {
   
   display: flex;
@@ -22,21 +26,34 @@ align-items: center;
 header {
   background-color:darkslateblue;
   display: flex;
-  padding-bottom: 10px;
+  padding: 10px;
   text-align: center;
 }
 
 #headLink {
+  /* display: none; */
   color:aliceblue;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+font-size: 140%;
+/* border: 1px solid black; */
 }
+
+/* #headLink:hover {
+  background-color:moccasin;
+  color: black;
+} */
+
 
 .sign {
 margin-top: 5px;
 }
 
 #logout {
+  /* display: none; */
   margin-left: auto;
   color:aliceblue;
+/* border: 1px solid black; */
+
 }
 
 .main-container {
@@ -57,6 +74,8 @@ aside {
 }
 aside a {
  margin: 3px;
+ text-decoration: none;
+ font-size: 120%;
 }
 
 aside a:hover {
@@ -80,4 +99,18 @@ aside a:hover {
   border: 1px solid red;
   padding: 10px 0 10px 10px;
   margin: 5px 0;
+}
+
+#message-container {
+  overflow: auto;
+  /* width: 60%; */
+  height: 400px;
+}
+
+.send__block {
+  border: 1px solid teal;
+}
+
+.main_mess_container {
+  width: 80%;
 }

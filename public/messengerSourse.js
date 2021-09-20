@@ -12,7 +12,7 @@ async function showChat(id) {
   let messages = await response.json();
 
   let messageContainer = '<div id="message-container"></div>';
-  let buttonHTML = `<div><textarea name="message"></textarea><button id="sendMessage">Send message</button></div>`;
+  let buttonHTML = `<div class="send__block"><textarea name="message"></textarea><button id="sendMessage">Send message</button></div>`;
   mainElement.innerHTML = messageContainer + buttonHTML;
 
   let dialog = document.querySelector('#message-container');

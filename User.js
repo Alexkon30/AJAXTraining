@@ -7,7 +7,7 @@ const User = new mongoose.Schema({
   birthday: { type: String, default: '' },
   name: { type: String, default: 'noName' },
   surname: { type: String, default: 'noSurname' },
-  age: { type: Number, default: 20 },
+  age: { type: Number },
   friends: [String],
 }, { versionKey: false })
 

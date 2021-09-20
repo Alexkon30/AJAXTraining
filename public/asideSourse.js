@@ -4,6 +4,8 @@ const messengerLink = document.querySelector('#messengerLink');
 const settingsLink = document.querySelector('#settingsLink');
 const mainElem = document.querySelector('main')
 
+
+
 peopleLink.addEventListener('click', async (e) => {
   e.preventDefault();
   let result = await fetch('/user/people', {

@@ -51,7 +51,6 @@ class userController {
   }
 
   getSettings(req, res) {
-    console.log(req.url);
     if (req.session.auth) {
       User.findById(req.session.userId)
         .then(result => {
@@ -68,8 +67,6 @@ class userController {
   }
 
   setSettings(req, res) {
-    console.log(req.url);
-
     if (req.session.auth) {
       User.findByIdAndUpdate(req.session.userId, req.body)
         .then(() => res.send())

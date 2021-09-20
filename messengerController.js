@@ -10,7 +10,7 @@ class messengerController {
           let chats = [];
           for (let friendId of user.friends) {
             let friend = await User.findById(friendId);
-            friend.name = friend.name == '' ? `login: ${friend.login}` : friend.name;
+            //friend.name = friend.name == '' ? `login: ${friend.login}` : friend.name;
             chats.push({ name: friend.name, id: friend.id })
           }
           res.render('messenger.hbs', {
@@ -32,14 +32,12 @@ class messengerController {
         if (message.authorId == req.session.userId) {
           let user = await User.findById(req.session.userId);
           message.type = 'user-message';
-          message.author = user.name == '' ? 'noName' : user.name;
+          message.author = user.name //== '' ? 'noName' : user.name;
         } else if (message.authorId == req.params.id) {
           let user = await User.findById(req.params.id);
           message.type = 'friend-message';
-          message.author = user.name == '' ? 'noName' : user.name;
+          message.author = user.name //== '' ? 'noName' : user.name;
         }
-
-        // !!! нестыковки в логике отправки новых сообщений и загрузке старых, надо менять логику
       }
       res.send(messages);
     } else {

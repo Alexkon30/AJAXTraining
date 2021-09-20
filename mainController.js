@@ -1,4 +1,5 @@
 import User from './User.js';
+import bcrypt from 'bcrypt';
 
 
 class mainController {
@@ -7,9 +8,12 @@ class mainController {
     let month = `${date.getMonth() + 1}`.length == 1 ?
       `0${date.getMonth() + 1}` :
       `${date.getMonth() + 1}`;
+
+    const hashPassword = await bcrypt.hash(req.body.password, 5);
+
     User.create({
       login: req.body.login,
-      password: req.body.password,
+      password: hashPassword,
       dateOfRegistration: `${date.getDate()}.${month}.${date.getFullYear()}`,
     }, (err, result) => {
       if (err) {
@@ -18,7 +22,8 @@ class mainController {
         res.status(500).send(err.message)
       } else {
         req.session.auth = true;
-        req.session.userId = result._id.toString();
+        req.session.userId = result.id;
+        req.session.userName = result.name;
         res.end();
         //res.redirect('/user');
       }
@@ -41,11 +46,16 @@ class mainController {
 
   async check(req, res) {
     try {
-      const user = await User.find(req.body);
-      if (user.length === 1) {
+      const password = req.body.password
+      const user = await User.findOne({
+        login: req.body.login,
+      });
+      console.log(user);
+      if (bcrypt.compareSync(req.body.password, user.password)) {
         req.session.auth = true;
-        req.session.userId = user[0]._id.toString();
-        req.session.userName = user[0].name == '' ? 'noName' : user[0].name;
+        req.session.userId = user.id;
+        console.log(user.id)
+        req.session.userName = user.name;
         res.end();
         //res.redirect('/user')
       } else {
